@@ -77,10 +77,20 @@ public interface Registry {
 	 */
 	<T> void put(Key<T> key, T value);
 
-	/**
-	 * Returns contents of this registry as a {@link Map map}.
-	 * 
-	 * @return content of the registry as a 
-	 */
-	Map<? extends Key<?>, ?> asMap();
+    /**
+     * Returns <tt>true</tt> if this registry contains no key-value mappings.
+     *
+     * @return <tt>true</tt> if this registry contains no key-value mappings
+     */
+	boolean isEmpty();
+
+    /**
+     * Returns the number of key-value mappings in this registry.  If the
+     * registry contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
+     * <tt>Integer.MAX_VALUE</tt>.
+     *
+     * @return the number of key-value mappings in this registry
+     * @see Map#size()
+     */
+	int size();
 }

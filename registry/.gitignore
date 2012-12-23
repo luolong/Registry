@@ -1,0 +1,14 @@
+.gradle
+target
+
+# Mac specific files
+.DS_Store
+
+# IDEA specific project metainfo
+.idea
+*.iml
+
+# Eclipse specific project metainfo
+.settings
+.project
+.classpath

@@ -1,0 +1,14 @@
+apply plugin: "java"
+apply plugin: "groovy"
+apply plugin: "idea"
+apply plugin: "eclipse"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    groovy group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.0'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+}

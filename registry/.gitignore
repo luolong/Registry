@@ -7,6 +7,8 @@ target
 # IDEA specific project metainfo
 .idea
 *.iml
+*.ipr
+*.iws
 
 # Eclipse specific project metainfo
 .settings

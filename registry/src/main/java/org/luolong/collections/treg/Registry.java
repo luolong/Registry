@@ -1,6 +1,8 @@
 package org.luolong.collections.treg;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Typed registry of key-value pairs.
@@ -24,19 +26,74 @@ public interface Registry {
 
 	/**
 	 * Typed entry.
-	 * 
+	 *
+     * The <tt>Registry.entrySet</tt> method returns a collection-view
+     * of the registry, whose elements are of this class.
+     * The <i>only</i> way to obtain a reference to a registry entry is
+     * from the iterator of this collection-view.  These <tt>Registry.Entry</tt>
+     * objects are valid <i>only</i> for the duration of the iteration; more formally,
+     * the behavior of a registry entry is undefined if the backing registry has been
+     * modified after the entry was returned by the iterator, except through
+     * the <tt>setValue</tt> operation on the registry entry.
+     *
+     * @see Registry#entrySet()
+     *
 	 * @author Roland Tepp
 	 *
-	 * @param <T> type of the value contained in this entry.
+	 * @param <T> type of the value of this registry entry.
 	 */
 	public static interface Entry<T> {
+        /**
+         * Returns the key corresponding to this entry.
+         *
+         * @return the key corresponding to this entry
+         * @throws IllegalStateException implementations may, but are not
+         *         required to, throw this exception if the entry has been
+         *         removed from the backing registry.
+         */
 		Key<T> getKey();
+
+        /**
+         * Returns the value corresponding to this entry.  If the mapping
+         * has been removed from the backing registry (by the iterator's
+         * <tt>remove</tt> operation), the results of this call are undefined.
+         *
+         * @return the value corresponding to this entry
+         * @throws IllegalStateException implementations may, but are not
+         *         required to, throw this exception if the entry has been
+         *         removed from the backing registry.
+         */
 		T getValue();
+
+        /**
+         * Replaces the value corresponding to this entry with the specified
+         * value (optional operation).  (Writes through to the registry.)  The
+         * behavior of this call is undefined if the mapping has already been
+         * removed from the registry (by the iterator's <tt>remove</tt> operation).
+         *
+         * @param value new value to be stored in this entry
+         * @return old value corresponding to the entry
+         * @throws UnsupportedOperationException if the <tt>put</tt> operation
+         *         is not supported by the backing registry
+         * @throws ClassCastException if the class of the specified value
+         *         prevents it from being stored in the backing registry
+         * @throws NullPointerException if the backing registry does not permit
+         *         null values, and the specified value is null
+         * @throws IllegalArgumentException if some property of this value
+         *         prevents it from being stored in the backing registry
+         * @throws IllegalStateException implementations may, but are not
+         *         required to, throw this exception if the entry has been
+         *         removed from the backing registry.
+         */
+        T setValue(T value);
 	}
 	
 	/**
-	 * Typed key
-	 * 
+	 * Typed key of a registry entry.
+	 *
+     * Value that corresponds to this key in a ragistry is typechecked
+     * to be of the prescribed type of this key.
+     *
 	 * @author Roland Tepp
 	 *
 	 * @param <T> type of the value that can be mapped to this key
@@ -90,7 +147,61 @@ public interface Registry {
      * <tt>Integer.MAX_VALUE</tt>.
      *
      * @return the number of key-value mappings in this registry
-     * @see Map#size()
+     * @see java.util.Map#size()
      */
 	int size();
+
+    /**
+     * Returns a {@link Set} view of the mappings contained in this registry.
+     * The set is backed by the registry, so changes to the registry are
+     * reflected in the set, and vice-versa.  If the registry is modified
+     * while an iteration over the set is in progress (except through
+     * the iterator's own <tt>remove</tt> operation, or through the
+     * <tt>setValue</tt> operation on a set entry returned by the
+     * iterator) the results of the iteration are undefined.  The set
+     * supports element removal, which removes the corresponding
+     * mapping from the registry, via the <tt>Iterator.remove</tt>,
+     * <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
+     * <tt>clear</tt> operations.  It does not support the
+     * <tt>add</tt> or <tt>addAll</tt> operations.
+     *
+     * @return a set view of the mappings contained in this registry
+     * @see java.util.Map#entrySet()
+     */
+    Set<Entry<?>> entrySet();
+
+    /**
+     * Returns a {@link Set} view of the keys contained in this registry.
+     * The set is backed by the registry, so changes to the registry are
+     * reflected in the set, and vice-versa.  If the registry is modified
+     * while an iteration over the registry is in progress (except through
+     * the iterator's own <tt>remove</tt> operation), the results of
+     * the iteration are undefined.  The set supports element removal,
+     * which removes the corresponding mapping from the registry, via the
+     * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>,
+     * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt>
+     * operations.  It does not support the <tt>add</tt> or <tt>addAll</tt>
+     * operations.
+     *
+     * @return a set view of the keys contained in this registry
+     */
+    Set<Key<?>> keySet();
+
+    /**
+     * Returns a {@link java.util.Collection} view of the values contained in this registry.
+     * The collection is backed by the registry, so changes to the registry are
+     * reflected in the collection, and vice-versa.  If the registry is
+     * modified while an iteration over the collection is in progress
+     * (except through the iterator's own <tt>remove</tt> operation),
+     * the results of the iteration are undefined.  The collection
+     * supports element removal, which removes the corresponding
+     * mapping from the registry, via the <tt>Iterator.remove</tt>,
+     * <tt>Collection.remove</tt>, <tt>removeAll</tt>,
+     * <tt>retainAll</tt> and <tt>clear</tt> operations.  It does not
+     * support the <tt>add</tt> or <tt>addAll</tt> operations.
+     *
+     * @return a collection view of the values contained in this map
+     */
+    Collection<?> values();
+
 }

@@ -1,8 +1,9 @@
-.gradle
-target
-
 # Mac specific files
 .DS_Store
+
+# gradle specific files
+.gradle
+target
 
 # IDEA specific project metainfo
 .idea

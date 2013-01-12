@@ -1,3 +1,0 @@
-package org.luolong.collections.treg
-
-public class RegistryImplementationSpec extends Specification

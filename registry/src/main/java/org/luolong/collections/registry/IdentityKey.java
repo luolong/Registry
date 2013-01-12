@@ -1,9 +1,9 @@
 /**
  * 
  */
-package org.luolong.collections.treg;
+package org.luolong.collections.registry;
 
-import org.luolong.collections.treg.Registry.Key;
+import org.luolong.collections.registry.Registry.Key;
 
 /**
  * Basic implementation of a typed registry key.
@@ -15,7 +15,7 @@ import org.luolong.collections.treg.Registry.Key;
  */
 public class IdentityKey<T> implements Key<T> {
 
-	protected final Class<T> type;
+	private final Class<T> type;
 
 	public IdentityKey(Class<T> type) {
 		this.type = type;
@@ -34,6 +34,10 @@ public class IdentityKey<T> implements Key<T> {
 	public int hashCode() {
 		return System.identityHashCode(this);
 	}
+
+    public String toString() {
+        return "Key<" + type.getSimpleName() + ">@" + hashCode();
+    }
 
 	public static <T> IdentityKey<T> of(Class<T> type) {
 		return new IdentityKey<T>(type);

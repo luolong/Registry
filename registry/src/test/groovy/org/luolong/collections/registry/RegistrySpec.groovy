@@ -1,4 +1,4 @@
-package org.luolong.collections.treg
+package org.luolong.collections.registry
 
 import spock.lang.Shared
 import spock.lang.Specification

@@ -1,3 +1,4 @@
 .DS_Store
 
 registry/build/
+registry/out/

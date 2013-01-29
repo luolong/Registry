@@ -14,7 +14,7 @@ public class NamedKey<T> implements Key<T> {
     private final Class<T> type;
     private final String name;
 
-    public NamedKey(Class<T> type, String name){
+    public NamedKey(Class<T> type, String name) {
         this.type = type;
         this.name = name;
     }

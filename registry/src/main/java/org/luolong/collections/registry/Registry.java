@@ -6,27 +6,27 @@ import java.util.Set;
 
 /**
  * Typed registry of key-value pairs.
- * 
+ * <p/>
  * <code>Registry</code> is a map like interface for storing type safe mappings of keys to values.
- * 
- * <p>This interface differs from the usual {@link Map} interface in that the type safety is maintained 
+ * <p/>
+ * <p>This interface differs from the usual {@link Map} interface in that the type safety is maintained
  * on the individual key-value pair level instead of declaring it on the class level.</p>
- * 
- * <p>This can be useful in the scenarios that have traditionally used map instances that allow 
+ * <p/>
+ * <p>This can be useful in the scenarios that have traditionally used map instances that allow
  * values of arbitrary type to be stored, like various service or other type of registries.</p>
- * 
+ * <p/>
  * <p>Due to the specifics of the type safety that are to be enforced on the individual entry leve,
- * keys usd in the mappings can not be <code>null</code> and attempting to insert retrieve values 
- * using <code>null</code> as a key can be considered illegal operation and should throw 
- * <code>NullPointerException</code>. 
- * 
+ * keys usd in the mappings can not be <code>null</code> and attempting to insert retrieve values
+ * using <code>null</code> as a key can be considered illegal operation and should throw
+ * <code>NullPointerException</code>.
+ *
  * @author Roland Tepp
  */
 public interface Registry {
 
-	/**
-	 * Typed entry.
-	 *
+    /**
+     * Typed entry.
+     * <p/>
      * The <tt>Registry.entrySet</tt> method returns a collection-view
      * of the registry, whose elements are of this class.
      * The <i>only</i> way to obtain a reference to a registry entry is
@@ -36,22 +36,20 @@ public interface Registry {
      * modified after the entry was returned by the iterator, except through
      * the <tt>setValue</tt> operation on the registry entry.
      *
+     * @param <T> type of the value of this registry entry.
+     * @author Roland Tepp
      * @see Registry#entrySet()
-     *
-	 * @author Roland Tepp
-	 *
-	 * @param <T> type of the value of this registry entry.
-	 */
-	public static interface Entry<T> {
+     */
+    public static interface Entry<T> {
         /**
          * Returns the key corresponding to this entry.
          *
          * @return the key corresponding to this entry
          * @throws IllegalStateException implementations may, but are not
-         *         required to, throw this exception if the entry has been
-         *         removed from the backing registry.
+         *                               required to, throw this exception if the entry has been
+         *                               removed from the backing registry.
          */
-		Key<T> getKey();
+        Key<T> getKey();
 
         /**
          * Returns the value corresponding to this entry.  If the mapping
@@ -60,10 +58,10 @@ public interface Registry {
          *
          * @return the value corresponding to this entry
          * @throws IllegalStateException implementations may, but are not
-         *         required to, throw this exception if the entry has been
-         *         removed from the backing registry.
+         *                               required to, throw this exception if the entry has been
+         *                               removed from the backing registry.
          */
-		T getValue();
+        T getValue();
 
         /**
          * Replaces the value corresponding to this entry with the specified
@@ -74,72 +72,70 @@ public interface Registry {
          * @param value new value to be stored in this entry
          * @return old value corresponding to the entry
          * @throws UnsupportedOperationException if the <tt>put</tt> operation
-         *         is not supported by the backing registry
-         * @throws ClassCastException if the class of the specified value
-         *         prevents it from being stored in the backing registry
-         * @throws NullPointerException if the backing registry does not permit
-         *         null values, and the specified value is null
-         * @throws IllegalArgumentException if some property of this value
-         *         prevents it from being stored in the backing registry
-         * @throws IllegalStateException implementations may, but are not
-         *         required to, throw this exception if the entry has been
-         *         removed from the backing registry.
+         *                                       is not supported by the backing registry
+         * @throws ClassCastException            if the class of the specified value
+         *                                       prevents it from being stored in the backing registry
+         * @throws NullPointerException          if the backing registry does not permit
+         *                                       null values, and the specified value is null
+         * @throws IllegalArgumentException      if some property of this value
+         *                                       prevents it from being stored in the backing registry
+         * @throws IllegalStateException         implementations may, but are not
+         *                                       required to, throw this exception if the entry has been
+         *                                       removed from the backing registry.
          */
         T setValue(T value);
-	}
-	
-	/**
-	 * Typed key of a registry entry.
-	 *
+    }
+
+    /**
+     * Typed key of a registry entry.
+     * <p/>
      * Value that corresponds to this key in a ragistry is typechecked
      * to be of the prescribed type of this key.
      *
-	 * @author Roland Tepp
-	 *
-	 * @param <T> type of the value that can be mapped to this key
-	 */
-	public static interface Key<T> {
-		Class<T> getType();
-	}
-	
-	
-	/**
-	 * Returns the value to which the specified key is mapped, or <code>null</code>
-	 * if this map contains no mapping for the key.
-	 * 
-	 * <p>More formally, if this map contains a mapping from a key <code>k</code> 
-	 * to a value <code>v</code> such that <code>(key==null ? k==null : key.equals(k))</code>,
-	 * then this method returns <code>v</code>; otherwise it returns <code>null</code>. 
-	 * (There can be at most one such mapping.)</p>
-	 * 
-	 * <p>If this map permits <code>null</code> values, then a return value of <code>null</code>
-	 * does not necessarily indicate that the map contains no mapping for the key; it's also 
-	 * possible that the map explicitly maps the key to <code>null</code>. 
-	 * The <code>containsKey</code> operation may be used to distinguish these two cases.</p>
-	 * 
-	 * @param key the key whose associated value is to be returned
-	 * @return the value to which the specified key is mapped, or <code>null</code> if this map
-	 *         contains no mapping for the key
-     * 
-     * @throws ClassCastException if the value is of an inappropriate type for this key
+     * @param <T> type of the value that can be mapped to this key
+     * @author Roland Tepp
+     */
+    public static interface Key<T> {
+        Class<T> getType();
+    }
+
+
+    /**
+     * Returns the value to which the specified key is mapped, or <code>null</code>
+     * if this map contains no mapping for the key.
+     * <p/>
+     * <p>More formally, if this map contains a mapping from a key <code>k</code>
+     * to a value <code>v</code> such that <code>(key==null ? k==null : key.equals(k))</code>,
+     * then this method returns <code>v</code>; otherwise it returns <code>null</code>.
+     * (There can be at most one such mapping.)</p>
+     * <p/>
+     * <p>If this map permits <code>null</code> values, then a return value of <code>null</code>
+     * does not necessarily indicate that the map contains no mapping for the key; it's also
+     * possible that the map explicitly maps the key to <code>null</code>.
+     * The <code>containsKey</code> operation may be used to distinguish these two cases.</p>
+     *
+     * @param key the key whose associated value is to be returned
+     * @return the value to which the specified key is mapped, or <code>null</code> if this map
+     *         contains no mapping for the key
+     * @throws ClassCastException   if the value is of an inappropriate type for this key
      * @throws NullPointerException if the provided key is <code>null</code>
-	 */
-	<T> T get(Key<T> key);
-	
-	/**
-	 * Associates the specified value with the specified key in this registry (optional operation). 
-	 * If the registry previously contained a mapping for the key, the old value is replaced by the 
-	 * specified value. (A registry m is said to contain a mapping for a key <code>k</code> if and 
-	 * only if <code>r.containsKey(k)</code> would return <code>true</code>.)
-	 */
-	<T> void put(Key<T> key, T value);
+     */
+    <T> T get(Key<T> key);
+
+    /**
+     * Associates the specified value with the specified key in this registry (optional operation).
+     * If the registry previously contained a mapping for the key, the old value is replaced by the
+     * specified value. (A registry m is said to contain a mapping for a key <code>k</code> if and
+     * only if <code>r.containsKey(k)</code> would return <code>true</code>.)
+     */
+    <T> void put(Key<T> key, T value);
 
     /**
      * Returns <tt>true</tt> if this registry contains no key-value mappings.
      *
      * @return <tt>true</tt> if this registry contains no key-value mappings
      */
-	boolean isEmpty();
+    boolean isEmpty();
 
     /**
      * Returns the number of key-value mappings in this registry.  If the
@@ -149,7 +145,7 @@ public interface Registry {
      * @return the number of key-value mappings in this registry
      * @see java.util.Map#size()
      */
-	int size();
+    int size();
 
     /**
      * Returns a {@link Set} view of the mappings contained in this registry.

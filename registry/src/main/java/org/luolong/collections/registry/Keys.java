@@ -10,7 +10,7 @@ public class Keys {
         return new TypeKey<T>(type);
     }
 
-    public static <T> IdentityKey<T> identity(Class type){
+    public static <T> IdentityKey<T> identity(Class type) {
         return new IdentityKey<T>(type);
     }
 

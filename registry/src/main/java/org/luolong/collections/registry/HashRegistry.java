@@ -4,33 +4,33 @@ import java.util.*;
 
 /**
  * Basic implementation of Registry on top of HashMap.
- * 
+ *
  * @author Roland Tepp
  */
 public class HashRegistry implements Registry {
 
-	private final Map<Key<?>, Object> map;
+    private final Map<Key<?>, Object> map;
 
-	public HashRegistry() {
-		this.map = new HashMap<Key<?>, Object>();
-	}
+    public HashRegistry() {
+        this.map = new HashMap<Key<?>, Object>();
+    }
 
-	public <T> T get(Key<T> key) {
-		Object value = map.get(key);
-		return key.getType().cast(value);
-	}
+    public <T> T get(Key<T> key) {
+        Object value = map.get(key);
+        return key.getType().cast(value);
+    }
 
-	public <T> void put(Key<T> key, T value) {
-		map.put(key, value);
-	}
+    public <T> void put(Key<T> key, T value) {
+        map.put(key, value);
+    }
 
-	public boolean isEmpty() {
-		return map.isEmpty();
-	}
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
 
-	public int size() {
-		return map.size();
-	}
+    public int size() {
+        return map.size();
+    }
 
     @Override
     public Set<Key<?>> keySet() {
@@ -88,7 +88,7 @@ public class HashRegistry implements Registry {
                         return new Entry<Object>() {
                             @Override
                             public Key<Object> getKey() {
-                                return (Key<Object>)entry.getKey();
+                                return (Key<Object>) entry.getKey();
                             }
 
                             @Override

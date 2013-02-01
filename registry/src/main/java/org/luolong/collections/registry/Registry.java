@@ -131,6 +131,70 @@ public interface Registry {
     <T> void put(Key<T> key, T value);
 
     /**
+     * Copies all of the mappings from the specified registry to this registry
+     * (optional operation).  The effect of this call is equivalent to that
+     * of calling {@link #put(Key, Object) put(k, v)} on this map once
+     * for each mapping from key <tt>k</tt> to value <tt>v</tt> in the
+     * specified registry.  The behavior of this operation is undefined if the
+     * specified registry is modified while the operation is in progress.
+     *
+     * @param r mappings to be stored in this registry
+     * @throws UnsupportedOperationException if the <tt>putAll</tt> operation
+     *         is not supported by this registry
+     * @throws ClassCastException if the class of a key or value in the
+     *         specified registry prevents it from being stored in this registry
+     * @throws NullPointerException if the specified registry is null, or if
+     *         this registry does not permit null values, and the
+     *         specified registry contains null values
+     * @throws IllegalArgumentException if some property of a key or value in
+     *         the specified registry prevents it from being stored in this registry
+     */
+    <T> void putAll(Registry r);
+
+    /**
+     * Removes the mapping for a key from this registry if it is present
+     * (optional operation).   More formally, if this registry contains a mapping
+     * from key <tt>k</tt> to value <tt>v</tt> such that
+     * <code>(key==null ?  k==null : key.equals(k))</code>, that mapping
+     * is removed.  (The registry can contain at most one such mapping.)
+     *
+     * <p>Returns the value to which this registry previously associated the key,
+     * or <tt>null</tt> if the registry contained no mapping for the key.
+     *
+     * <p>If this registry permits null values, then a return value of
+     * <tt>null</tt> does not <i>necessarily</i> indicate that the registry
+     * contained no mapping for the key; it's also possible that the registry
+     * explicitly mapped the key to <tt>null</tt>.
+     *
+     * <p>The registry will not contain a mapping for the specified key once the
+     * call returns.
+     *
+     * @param key key whose mapping is to be removed from the registry
+     * @return the previous value associated with <tt>key</tt>, or
+     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
+     * @throws UnsupportedOperationException if the <tt>remove</tt> operation
+     *         is not supported by this registry
+     * @throws ClassCastException if the key is of an inappropriate type for
+     *         this registry
+     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException if the specified key is null
+     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     */
+    <T> T remove(Key<T> key);
+
+    /**
+     * Removes all entries of the specified type from this registry.
+     *
+     * <p>The registry will not contain entries of the specified type once the
+     * call returns.</p>
+     *
+     * @param type type of the key-value pair to remove from this registry.
+     * @param <T>
+     * @return A set of removed entries.
+     */
+    <T> Set<Entry<? extends T>> removeAll(Class<T> type);
+
+    /**
      * Returns <tt>true</tt> if this registry contains no key-value mappings.
      *
      * @return <tt>true</tt> if this registry contains no key-value mappings
@@ -200,4 +264,18 @@ public interface Registry {
      */
     Collection<?> values();
 
+    <T> Set<Entry<? extends T>> entrySet(Class<T> type);
+
+    <T> Set<Key<? extends T>> keySet(Class<T> type);
+
+    <T> Collection<? extends T> values(Class<T> type);
+
+    /**
+     * Removes all of the mappings from this registry (optional operation).
+     * The registry will be empty after this call returns.
+     *
+     * @throws UnsupportedOperationException if the <tt>clear</tt> operation
+     *         is not supported by this map
+     */
+    void clear();
 }

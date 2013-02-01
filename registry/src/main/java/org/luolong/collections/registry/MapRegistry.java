@@ -1,26 +1,39 @@
 package org.luolong.collections.registry;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.*;
 
 /**
- * Basic implementation of Registry on top of HashMap.
+ * Basic implementation of Registry using {@code java.util.Map} for
+ * internal storage of key-value pairs.
  *
  * @author Roland Tepp
  */
-public class HashRegistry implements Registry {
+public class MapRegistry implements Registry {
 
-    private final Map<Key<?>, Object> map;
+    // Internal map storage of registry entries
+    private final Map<Object, Object> map;
 
-    public HashRegistry() {
-        this.map = new HashMap<Key<?>, Object>();
+    public MapRegistry() {
+        this.map = new HashMap<>();
     }
 
-    public <T> T get(Key<T> key) {
+    public MapRegistry(@NotNull Map<Object, Object> impl) {
+        if (Objects.requireNonNull( impl, "Map implementation can not be null").isEmpty() ) {
+            throw new IllegalArgumentException("Initial map implementation must be empty!");
+        }
+        this.map = impl;
+    }
+
+    public <T> T get(@NotNull Key<T> key) {
         Object value = map.get(key);
         return key.getType().cast(value);
     }
 
-    public <T> void put(Key<T> key, T value) {
+    public <T> void put(@NotNull Key<T> key, @Nullable T value) {
         map.put(key, value);
     }
 
@@ -34,7 +47,7 @@ public class HashRegistry implements Registry {
 
     @Override
     public Set<Key<?>> keySet() {
-        final Set<Key<?>> keys = map.keySet();
+        final Set<Object> keys = map.keySet();
         return new AbstractSet<Key<?>>() {
             @Override
             public Iterator<Key<?>> iterator() {
@@ -71,11 +84,11 @@ public class HashRegistry implements Registry {
 
     @Override
     public Set<Entry<?>> entrySet() {
-        final Set<Map.Entry<Key<?>, Object>> entries = map.entrySet();
+        final Set<Map.Entry<Object, Object>> entries = map.entrySet();
         return new AbstractSet<Entry<?>>() {
             @Override
             public Iterator<Entry<?>> iterator() {
-                final Iterator<Map.Entry<Key<?>, Object>> iterator = entries.iterator();
+                final Iterator<Map.Entry<Object, Object>> iterator = entries.iterator();
                 return new Iterator<Entry<?>>() {
                     @Override
                     public boolean hasNext() {
@@ -84,7 +97,7 @@ public class HashRegistry implements Registry {
 
                     @Override
                     public Entry<?> next() {
-                        final Map.Entry<Key<?>, Object> entry = iterator.next();
+                        final Map.Entry<Object, Object> entry = iterator.next();
                         return new Entry<Object>() {
                             @Override
                             public Key<Object> getKey() {

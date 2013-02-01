@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 public class RegistryImplementations{
     public static List<Registry> create() {
-        return [new HashRegistry()]
+        return [new MapRegistry()]
     }
 }
 

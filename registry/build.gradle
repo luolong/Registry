@@ -3,6 +3,9 @@ apply plugin: "groovy"
 apply plugin: "idea"
 apply plugin: "eclipse"
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -13,16 +16,3 @@ dependencies {
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
 }
 
-idea {
-    project {
-        jdkName = '1.7'
-        languageLevel = '1.7'
-    }
-}
-
-eclipse {
-    jdt {
-        sourceCompatibility = 1.7
-        targetCompatibility = 1.7
-    }
-}

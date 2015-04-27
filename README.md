@@ -1,6 +1,8 @@
 Generic Registry of type safe key-value pairs
 =============================================
 
+[![Build Status](https://drone.io/github.com/luolong/Registry/status.png)](https://drone.io/github.com/luolong/Registry/latest)
+
 Main premise of this exercise is to devise a type-safe api for keeping and accessing generic registry of key-value pairs.
 
 Usually such registries are implemented using some variation of `Object -> Object` or `String -> Object` mappings.

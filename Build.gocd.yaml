@@ -6,13 +6,13 @@ pipelines:
     lock_behavior: none
     display_order: -1
     materials:
-      GitHub:
-        git: https://gitlab.com/luolong/body-composition-graph.git
+      git-187ac25:
+        git: https://github.com/luolong/Registry.git
         shallow_clone: false
         auto_update: true
         branch: master
     stages:
-    - Build:
+    - Build-and-Test:
         fetch_materials: true
         keep_artifacts: false
         clean_workspace: false
@@ -20,16 +20,12 @@ pipelines:
           type: success
           allow_only_on_success: false
         jobs:
-          Gradle-build:
+          Build:
             timeout: 0
             tasks:
             - exec:
-              command: cd
-              arguments:
-              - repository
-              run_if: passed
-            - exec:
-                command: ./gradlew
                 arguments:
                 - build
+                command: ./gradlew
+                working_directory: registry
                 run_if: passed

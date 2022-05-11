@@ -11,7 +11,6 @@ pipelines:
         shallow_clone: false
         auto_update: true
         branch: master
-        destination: registry
     stages:
     - Build:
         fetch_materials: true
@@ -25,7 +24,12 @@ pipelines:
             timeout: 0
             tasks:
             - exec:
+              command: cd
+              arguments:
+              - repository
+              run_if: passed
+            - exec:
+                command: ./gradlew
                 arguments:
                 - build
-                command: ./gradlew
                 run_if: passed

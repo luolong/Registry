@@ -1,0 +1,31 @@
+format_version: 10
+pipelines:
+  Build:
+    group: My-Pipelines
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      GitHub:
+        git: https://gitlab.com/luolong/body-composition-graph.git
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        destination: registry
+    stages:
+    - Build:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          Gradle-build:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - build
+                command: ./gradlew
+                run_if: passed
